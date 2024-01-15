@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>get all user</title>
+    <link rel='stylesheet' href='/public/stylesheets/style.css' />
+</head>
+
+<body>
+    <div class="row">
+        <% for (let p of people)  
+      {%>
+            <p>
+                Tên user: <b> <%=p.userName%> </b> <br> email:
+                <%=p.email %>
+            </p>
+            <hr>
+            <%} 
+      %>
+    </div>
+</body>
+
+</html>
