@@ -12,8 +12,8 @@ const { validationResult } = require('express-validator');
 router.get('/', async function(req, res, next) {
     console.log(req.query);
     var usersAll = await modelUser.getall(req.query);
-    //responseData.responseReturn(res, 200, true, usersAll);
-    res.render('test.ejs', { people: usersAll });
+    responseData.responseReturn(res, 200, true, usersAll);
+    //res.render('test.ejs', { people: usersAll });
 });
 router.get('/:id', async function(req, res, next) { // get by ID
     try {
@@ -46,17 +46,28 @@ router.post('/add', validate.validator(),
         }
     });
 router.put('/edit/:id', async function(req, res, next) {
-    try {
+    var user = await modelUser.getOne(req.params.id);
+    /*try {
         var user = await modelUser.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
         responseData.responseReturn(res, 200, true, user);
     } catch (error) {
         responseData.responseReturn(res, 404, false, "khong tim thay user");
+    }*/
+    if (user) {
+        user.userName = req.body.userName;
+        user.email = req.body.email;
+        user.fullname = req.body.fullname;
+        user.gender = req.body.gender;
+        user.setUpdate(user);
+        res.render('testedit.ejs', { person: user });
+    } else {
+        res.statusMessage("lỗi!");
     }
 });
-router.delete('/delete/:id', function(req, res, next) { //delete by Id
+router.put('/delete/:id', function(req, res, next) {
     try {
         var user = modelUser.findByIdAndDelete(req.params.id);
-        responseData.responseReturn(res, 200, true, "xoa thanh cong");
+        responseData.responseReturn(res, 200, true, user);
     } catch (error) {
         responseData.responseReturn(res, 404, false, "khong tim thay user");
     }

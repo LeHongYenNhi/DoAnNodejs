@@ -39,5 +39,5 @@ module.exports = {
             tokenForgot: token,
             tokenForgotExp: { $gte: Date.now() }
         }).exec();
-    },
+    }
 }

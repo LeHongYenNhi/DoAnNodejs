@@ -14,7 +14,7 @@ var options = {
         minNumbers: 1,
         minSymbols: 1
     },
-    roles: ['admin', 'user', 'publisher']
+    roles: ['admin', 'user', 'specialuser']
 }
 
 module.exports = {

@@ -12,10 +12,11 @@ const schema = new mongoose.Schema({
     tokenForgot: String,
     tokenForgotExp: String,
     fullname: String,
+    isdelete: Boolean,
     gender: String,
-    accumulation_k: {
+    role_k: {
         type: mongoose.Schema.ObjectId,
-        ref: 'accumulatedpoint'
+        ref: 'role'
     }
 });
 
@@ -34,8 +35,6 @@ schema.virtual('accumulatedpoint', {
     localField: '_id',
     foreignField: 'user_k'
 });
-schema.set('toJSON', { virtuals: true });
-schema.set('toObject', { virtuals: true });
 
 schema.pre('save', function(next) {
     if (!this.isModified("password")) {
@@ -59,20 +58,19 @@ schema.methods.addTokenForgotPassword = function() {
 }
 
 schema.statics.checkLogin = async function(userName, password) {
-        if (!userName || !password) {
-            return { err: 'Hãy nhập đầy đủ username va password' };
-        }
-        var user = await this.findOne({ userName: userName });
-        if (!user) {
-            return { err: 'userName không tồn tại' };
-        }
-        var result = bcrypt.compareSync(password, user.password);
-        if (!result) {
-            return { err: 'password sai' };
-        }
-        console.log(user);
-        return user;
+    if (!userName || !password) {
+        return { err: 'Hãy nhập đầy đủ username va password' };
     }
-    //JWT
+    var user = await this.findOne({ userName: userName });
+    if (!user) {
+        return { err: 'userName không tồn tại' };
+    }
+    var result = bcrypt.compareSync(password, user.password);
+    if (!result) {
+        return { err: 'password sai' };
+    }
+    console.log(user);
+    return user;
+}
 
 module.exports = mongoose.model('user', schema);;
