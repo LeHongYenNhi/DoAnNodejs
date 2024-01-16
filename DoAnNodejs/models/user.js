@@ -2,22 +2,7 @@ var SchemaUser = require('../schema/user')
 
 module.exports = {
     getall: function(query) {
-        var sort = {};
-        var Search = {};
-        if (query.sort) {
-            if (query.sort[0] == '-') {
-                sort[query.sort.substring(1)] = 'desc';
-            } else {
-                sort[query.sort] = 'asc';
-            }
-        }
-        if (query.key) {
-            Search.userName = new RegExp(query.key, 'i');
-        }
-        var limit = parseInt(query.limit) || 2;
-        var page = parseInt(query.page) || 1;
-        var skip = (page - 1) * limit;
-        return SchemaUser.find(Search).select('userName password').sort(sort).limit(limit).skip(skip).exec();
+        return SchemaUser.find({ isdelete: "false" }).sort({ userName: 1 });
     },
     getOne: function(id) {
         return SchemaUser.findById(id);
@@ -39,5 +24,11 @@ module.exports = {
             tokenForgot: token,
             tokenForgotExp: { $gte: Date.now() }
         }).exec();
+    },
+    findByIdAndUpdate: function(id, user) {
+        return SchemaUser.findByIdAndUpdate(id, user);
+    },
+    findByIdAndDelete: function(id) {
+        return SchemaUser.findByIdAndUpdate(id, { isdelete: true });
     }
 }

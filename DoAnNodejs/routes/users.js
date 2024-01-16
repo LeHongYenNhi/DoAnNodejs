@@ -39,37 +39,29 @@ router.post('/add', validate.validator(),
                 userName: req.body.userName,
                 email: req.body.email,
                 password: req.body.password,
-                department_k: req.body.department_k
+                role: req.body.role,
+                fullname: req.body.fullname,
+                gender: req.body.gender,
+                isdelete: false
             })
 
             responseData.responseReturn(res, 200, true, newUser);
         }
     });
 router.put('/edit/:id', async function(req, res, next) {
-    var user = await modelUser.getOne(req.params.id);
-    /*try {
+    try {
         var user = await modelUser.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
         responseData.responseReturn(res, 200, true, user);
     } catch (error) {
         responseData.responseReturn(res, 404, false, "khong tim thay user");
-    }*/
-    if (user) {
-        user.userName = req.body.userName;
-        user.email = req.body.email;
-        user.fullname = req.body.fullname;
-        user.gender = req.body.gender;
-        user.setUpdate(user);
-        res.render('testedit.ejs', { person: user });
-    } else {
-        res.statusMessage("lỗi!");
     }
 });
-router.put('/delete/:id', function(req, res, next) {
+router.put('/delete/:id', function(req, res, next) { ///lỗi
     try {
         var user = modelUser.findByIdAndDelete(req.params.id);
         responseData.responseReturn(res, 200, true, user);
     } catch (error) {
-        responseData.responseReturn(res, 404, false, "khong tim thay user");
+        responseData.responseReturn(res, 404, false, "lỗi");
     }
 });
 

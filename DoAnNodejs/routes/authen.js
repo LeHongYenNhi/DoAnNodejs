@@ -27,7 +27,10 @@ router.post('/register', validate.validator(),
                 userName: req.body.userName,
                 email: req.body.email,
                 password: req.body.password,
-                role: req.body.role
+                role: req.body.role,
+                fullname: req.body.fullname,
+                gender: req.body.gender,
+                isdelete: req.body.isdelete
             })
             responseData.responseReturn(res, 200, true, newUser);
         }

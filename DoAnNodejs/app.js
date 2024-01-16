@@ -10,7 +10,6 @@ var usersRouter = require('./routes/users');
 var eventsRouter = require('./routes/events');
 var attendancesRouter = require('./routes/attendances');
 var accumulationRouter = require('./routes/accumulatedpoints');
-var rolesRouter = require('./routes/roles');
 var itemsRouter = require('./routes/items');
 var authenRouter = require('./routes/authen');
 
@@ -29,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/events', eventsRouter);
-app.use('/roles', rolesRouter);
 app.use('/attendances', attendancesRouter);
 app.use('/accumulation', accumulationRouter);
 app.use('/items', itemsRouter);

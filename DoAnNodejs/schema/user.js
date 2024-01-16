@@ -13,11 +13,7 @@ const schema = new mongoose.Schema({
     tokenForgotExp: String,
     fullname: String,
     isdelete: Boolean,
-    gender: String,
-    role_k: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'role'
-    }
+    gender: String
 });
 
 schema.virtual('event', {
